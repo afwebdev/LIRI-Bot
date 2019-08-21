@@ -28,8 +28,11 @@ const readFromFile = () => {
 			case "movie-this":
 				search.omdb(query, searchPrompt);
 				break;
-			case "RANDOM":
+			case "random":
 				readFromFile();
+				break;
+			case "Exit":
+				process.exit();
 				break;
 			default:
 				break;
@@ -46,16 +49,18 @@ const searchPrompt = searchAgain => {
 				name: "option",
 				message: function() {
 					if (searchAgain) {
-						return "What would you like to do?";
+						return "What would you like to do now?";
 					} else {
 						return "Welcome to LIRI, Multi-Entertainment Search!";
 					}
 				},
-				choices: ["Find a Song", "Find a Concert", "Find a Movie", "RANDOM"]
+				choices: ["Find a Song", "Find a Concert", "Find a Movie", "Random", "Exit"]
 			},
 			{
 				when: function(answers) {
-					if (answers.option !== "RANDOM") {
+					if (answers.option === "Exit" || answers.option === "Random") {
+						return false;
+					} else {
 						return true;
 					}
 				},
@@ -75,8 +80,11 @@ const searchPrompt = searchAgain => {
 				case "Find a Movie":
 					search.omdb(answers.query, searchPrompt);
 					break;
-				case "RANDOM":
+				case "Random":
 					readFromFile(searchPrompt);
+					break;
+				case "Exit":
+					process.exit();
 					break;
 				default:
 					break;

@@ -14,17 +14,21 @@ class Search {
 Search.prototype.spotify = function(query, callback) {
 	console.clear();
 	let spotify = new Spotify(keys.spotify);
+	if (query === "") {
+		console.log(divider);
+		console.log("		 Enter A Search Term!");
+		console.log(divider);
+
+		callback();
+		return;
+	}
 
 	spotify.search(
 		{
 			type: "track",
 			query: query
 		},
-		(err, data) => {
-			if (err) {
-				console.error(err);
-				return;
-			}
+		function(err, data) {
 			//success,
 			let title = data.tracks.items[0].name;
 			let artist = data.tracks.items[0].album.artists[0].name;
