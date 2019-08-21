@@ -18,7 +18,6 @@ Search.prototype.spotify = function(query, callback) {
 		console.log(divider);
 		console.log("		 Enter A Search Term!");
 		console.log(divider);
-
 		callback();
 		return;
 	}
@@ -29,6 +28,7 @@ Search.prototype.spotify = function(query, callback) {
 			query: query
 		},
 		function(err, data) {
+			let url = data.tracks.items[0].preview_url;
 			//success,
 			let title = data.tracks.items[0].name;
 			let artist = data.tracks.items[0].album.artists[0].name;
@@ -38,6 +38,7 @@ Search.prototype.spotify = function(query, callback) {
 			console.log(`* Title: ${title}`);
 			console.log(`* Artist: ${artist}`);
 			console.log(`* Album: ${album}`);
+			console.log(`* Preview: ${url}`);
 			console.log(divider);
 			callback(true);
 		}
